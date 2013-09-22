@@ -15,7 +15,14 @@ $.fn.backbone = (option = 'this') ->
       @parent().backbone('closest')
 
 class ConsoleLogger
+  lastTime: null
+
   log: (type, object, details) ->
+    now = (new Date).getTime()
+    length = now - @lastTime
+    if length > 10
+      console.error 'Took ' + length + ' ms to complete!'
+    @lastTime = now
     console.log("[#{type}]", details, ":", object)
 
 class Backbone.Debug
